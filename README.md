@@ -1,65 +1,61 @@
 Autoenv
 =======
 
-#### Autoenv automatically sources (known/whitelisted) `.env` and `.out` files.
+#### Autoenv automatically sources (known/whitelisted) `.env.fish` and `.out.fish` files.
 
-This plugin support for enter and leave events. By default `.env` is used for entering, and `.out` for leaving. And you can set variable `COLORS=true` for enabling colored output.
+This is a FISH Shell port of [horosgrisa/autoenv](https://github.com/horosgrisa/autoenv). Please go check it if you're using ZSH.
+
+This plugin support for enter and leave events. By default `.env.fish` is used for entering, and `.out.fish` for leaving.
 
 ## Example of use
 
-- If you are in the directory `/home/user/dir1` and execute `cd /var/www/myproject` this plugin will source following files if they exist 
+- If you are in the directory `/home/user/dir1` and execute `cd /var/www/myproject` this plugin will source following files if they exist
 ```
-/home/user/dir1/.out
-/home/user/.out
-/home/.out
-/var/.env
-/var/www/.env
-/var/www/myproject/.env
-```
-
-- If you are in the directory `/` and execute `cd /home/user/dir1` this plugin will source following files if they exist 
-```
-/home/.env
-/home/user/.env
-/home/user/dir1/.env
+/home/user/dir1/.out.fish
+/home/user/.out.fish
+/home/.out.fish
+/var/.env.fish
+/var/www/.env.fish
+/var/www/myproject/.env.fish
 ```
 
-- If you are in the directory `/home/user/dir1` and execute `cd /` this plugin will source following files if they exist 
+- If you are in the directory `/` and execute `cd /home/user/dir1` this plugin will source following files if they exist
 ```
-/home/user/dir1/.out
-/home/user/.out
-/home/.out
+/home/.env.fish
+/home/user/.env.fish
+/home/user/dir1/.env.fish
 ```
 
-## Example of `.env` and `.out` files useful for node.js developing
+- If you are in the directory `/home/user/dir1` and execute `cd /` this plugin will source following files if they exist
+```
+/home/user/dir1/.out.fish
+/home/user/.out.fish
+/home/.out.fish
+```
 
-### .env
+## Example of `.env.fish` and `.out.fish` files useful for node.js developing
+
+### .env.fish
+
 ```sh
 nvm use node
-OLDPATH=$PATH
-export PATH=`pwd`/node_modules/.bin:$PATH
-
+set -g OLDPATH $PATH
+set -gx PATH (pwd)/node_modules/.bin $PATH
 ```
 
-### .out
+### .out.fish
 ```sh
 nvm use system
-export PATH=$OLDPATH
-
+set -gx PATH $OLDPATH
 ```
 
 ## Installation
 
-### Using [ZPM](https://github.com/horosgrisa/ZPM)
+Clone the repo to somewhere and just source `autoenv.fish`
 
-Add `Plug horosgrisa/autoenv` into `.zshrc`
-
-### Using [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)
-
-Execute `git clone https://github.com/horosgrisa/autoenv ~/.oh-my-zsh/custom/plugins`. Add `autoenv` into plugins array in `.zshrc`
-
-### Using [antigen](https://github.com/zsh-users/antigen)
-
-Add `antigen-bundle horosgrisa/autoenv` into `.zshrc`
-
+```sh
+git clone https://github.com/eknkc/fish-autoenv.git
+cd fish-autoenv
+. autoenv.fish
+```
 
