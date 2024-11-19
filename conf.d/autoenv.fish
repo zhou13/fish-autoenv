@@ -1,6 +1,12 @@
 if [ -z $AUTOENV_AUTH_FILE ]
   set AUTOENV_AUTH_FILE "$HOME/.autoenv_authorized"
 end
+if [ -z $AUTOENV_FILE_ENTER ]
+  set AUTOENV_FILE_ENTER ".autoenv.fish"
+end
+if [ -z $AUTOENV_FILE_LEAVE ]
+  set AUTOENV_FILE_LEAVE ".autoenv_leave.fish"
+end
 
 function _autoenv_exec
   if [ ! -f $argv ]
@@ -59,7 +65,7 @@ function _autoenv --on-variable PWD
   set -l newpath $PWD
 
   if [ -z $AUTOENV_OLDPATH ]
-    _autoenv_exec "/.env.fish"
+    _autoenv_exec "/$AUTOENV_FILE_ENTER"
     set -g AUTOENV_OLDPATH "/"
   end
 
@@ -86,13 +92,13 @@ function _autoenv --on-variable PWD
 
   if [ $commonindex -lt (count $AUTOENV_OLDPATH) ]
     for op in $AUTOENV_OLDPATH[-1..(math $commonindex+1)]
-      _autoenv_exec $op/.out.fish
+      _autoenv_exec $op/$AUTOENV_FILE_LEAVE
     end
   end
 
   if [ $commonindex -lt (count $newpath) ]
     for op in $newpath[(math $commonindex+1)..-1]
-      _autoenv_exec $op/.env.fish
+      _autoenv_exec $op/$AUTOENV_FILE_ENTER
     end
   end
 

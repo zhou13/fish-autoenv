@@ -1,61 +1,37 @@
-Autoenv
-=======
+# Autoenv
 
-#### Autoenv automatically sources (known/whitelisted) `.env.fish` and `.out.fish` files.
+#### Autoenv automatically sources (known/whitelisted) `.autoenv.fish` and `.autoenv_leave.fish` files.
 
-This is a FISH Shell port of [horosgrisa/autoenv](https://github.com/horosgrisa/autoenv). Please go check it if you're using ZSH.
+This is a fork of [aohorodnyk/fish-autovenv](ttps://github.com/aohorodnyk/fish-autovenv), which is a FISH Shell port of [horosgrisa/autoenv](https://github.com/horosgrisa/autoenv).
 
-This plugin support for enter and leave events. By default `.env.fish` is used for entering, and `.out.fish` for leaving.
+## Features
 
-## Example of use
-
-- If you are in the directory `/home/user/dir1` and execute `cd /var/www/myproject` this plugin will source following files if they exist
-```
-/home/user/dir1/.out.fish
-/home/user/.out.fish
-/home/.out.fish
-/var/.env.fish
-/var/www/.env.fish
-/var/www/myproject/.env.fish
-```
-
-- If you are in the directory `/` and execute `cd /home/user/dir1` this plugin will source following files if they exist
-```
-/home/.env.fish
-/home/user/.env.fish
-/home/user/dir1/.env.fish
-```
-
-- If you are in the directory `/home/user/dir1` and execute `cd /` this plugin will source following files if they exist
-```
-/home/user/dir1/.out.fish
-/home/user/.out.fish
-/home/.out.fish
-```
-
-## Example of `.env.fish` and `.out.fish` files useful for node.js developing
-
-### .env.fish
-
-```sh
-nvm use node
-set -g OLDPATH $PATH
-set -gx PATH (pwd)/node_modules/.bin $PATH
-```
-
-### .out.fish
-```sh
-nvm use system
-set -gx PATH $OLDPATH
-```
+- Installable via `fisher`
+- Use `.autoenv.fish` for entering and `.autoenv_leave.fish` for leaving instead of `.env.fish` and `.out.fish` by default
+- The autoenv files can be configured via environment variables `AUTOENV_FILE_ENTER` and
+  `AUTOENV_FILE_LEAVE`.
 
 ## Installation
 
 Clone the repo to somewhere and just source `autoenv.fish`
 
 ```sh
-git clone https://github.com/eknkc/fish-autoenv.git
-cd fish-autoenv
-. autoenv.fish
+fish install zhou13/fish-autoenv
 ```
 
+## Configuration
+
+You can use the following variables to control fish-autoenv behavior.
+
+### AUTOENV_FILE_ENTER
+
+Name of the file to look for when entering directories.
+
+Default: `.autoenv.fish`
+
+### AUTOENV_FILE_LEAVE
+
+Name of the file to look for when leaving directories.
+Requires `AUTOENV_HANDLE_LEAVE=1`.
+
+Default: `.autoenv_leave.fish`
