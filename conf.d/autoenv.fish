@@ -19,7 +19,8 @@ function _autoenv_exec
     set hash (sha1sum $argv | cut -d' ' -f 1)
   end
 
-  if grep "$argv:$hash" "$AUTOENV_AUTH_FILE"  > /dev/null ^ /dev/null
+  if grep "$argv:$hash" "$AUTOENV_AUTH_FILE" &> /dev/null
+    echo "Sourcing autoenv file: $argv"
     . $argv
   else
     echo "> WARNING"
@@ -31,7 +32,7 @@ function _autoenv_exec
     echo
     echo "----------------"
     echo
-    echo -n "Are you sure you want to allow this? (y/N)"
+    echo "Are you sure you want to allow this? (y/N)"
 
     read answer
 
@@ -103,4 +104,13 @@ function _autoenv --on-variable PWD
   end
 
   set -g AUTOENV_OLDPATH $PWD
+end
+
+# Activates autovenv on startup.
+set --global _autoenv_initialized 0
+function __autoenv_on_prompt --on-event fish_prompt
+  if test "$_autoenv_initialized" = "0"
+    _autoenv
+    set --global _autoenv_initialized 1
+  end
 end

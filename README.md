@@ -8,15 +8,16 @@ This is a fork of [aohorodnyk/fish-autovenv](ttps://github.com/aohorodnyk/fish-a
 
 - Installable via `fisher`
 - Use `.autoenv.fish` for entering and `.autoenv_leave.fish` for leaving instead of `.env.fish` and `.out.fish` by default
-- The autoenv files can be configured via environment variables `AUTOENV_FILE_ENTER` and
+- Autoenv files can be configured via environment variables `AUTOENV_FILE_ENTER` and
   `AUTOENV_FILE_LEAVE`.
+- Reliable on startup
 
 ## Installation
 
-Clone the repo to somewhere and just source `autoenv.fish`
+This package can be installed via `fisher`:
 
 ```sh
-fish install zhou13/fish-autoenv
+fisher install zhou13/fish-autoenv
 ```
 
 ## Configuration
