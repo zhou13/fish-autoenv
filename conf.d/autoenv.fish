@@ -13,7 +13,7 @@ function _autoenv_exec
     return
   end
 
-  if which shasum > /dev/null ^ /dev/null
+  if which shasum &> /dev/null
     set hash (shasum $argv | cut -d' ' -f 1)
   else
     set hash (sha1sum $argv | cut -d' ' -f 1)
